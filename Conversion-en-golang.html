@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Conversion avec Golgan - /dev/Chiheb-Nexus</title>
+        <meta charset="utf-8" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/theme/static/css/style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Full Atom Feed" />
+        <link href="/feeds/golang.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Categories Atom Feed" />
+    </head>
+
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="">Home</a></li>
+                    <li><a href="/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="">/dev/Chiheb-Nexus</a></h3>
+				<h2 class="text-muted"></h2>
+             </div>
+<section id="content" class="article content">
+  <header>
+    <h2 class="entry-title">
+      <a href="/Conversion-en-golang.html" rel="bookmark"
+         title="Permalink to Conversion avec Golgan">Conversion avec Golgan</a></h2>
+ 
+  </header>
+  
+     
+  <div class="entry-content">
+    <p>Ce script peut convertir:</p>
+<ul>
+<li>Une chaîne de caractère en sa représentation hexadécimale</li>
+<li>Hexadécimal en chaîne de caractère</li>
+<li>Une chaîne de caractère en binaire</li>
+<li>Un entier en sa représentation binaire</li>
+<li>Un binaire en entier</li>
+<li>Un entier en sa représentation hexadécimale</li>
+<li>Une chaîne de caractère en un entier (représentation: ASCII to int)</li>
+<li>Un binaire en chaîne de caractère</li>
+<li>Hexadécimal en entier</li>
+</ul>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;encoding/hex&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;strconv&quot;</span>
+    <span class="s">&quot;strings&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">convertStringToHex</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%x&quot;</span><span class="p">,</span> <span class="nx">inputStr</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/* We can also use this method</span>
+<span class="cm">func convertStringToHex(i int, prefix bool) string{  // note input (int, bool)</span>
+<span class="cm">      i64 := int64(i)</span>
+<span class="cm">      if prefix{</span>
+<span class="cm">          return &quot;0x&quot; + strconv.FormatInt(i64, 16) // with prefix 0x</span>
+<span class="cm">    } else {</span>
+<span class="cm">          return strconv.FormatInt(i64, 16)  // without prefix 0x</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="kd">func</span> <span class="nx">convertHexToString</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">inputStr</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Replace</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">,</span> <span class="s">&quot;0x&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nx">bs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">hex</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Error occurred during the convertion of %s into a String\n&quot;</span><span class="p">,</span> <span class="nx">inputStr</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">bs</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertStringToBinary</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">res</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">s</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">inputStr</span> <span class="p">{</span>
+        <span class="nx">res</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%.8b&quot;</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertIntToBinary</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">bool</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">i64</span> <span class="o">:=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">prefix</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;0b%b&quot;</span><span class="p">,</span> <span class="nx">i64</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%b&quot;</span><span class="p">,</span> <span class="nx">i64</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* We can also use this method</span>
+<span class="cm">func convertIntToBinary(input_int int, prefix bool) string{</span>
+<span class="cm">  i64 := int64(input_int)</span>
+<span class="cm">  if prefix{</span>
+<span class="cm">    return &quot;0b&quot; + strconv.FormatInt(i64, 2)</span>
+<span class="cm">  } else {</span>
+<span class="cm">    return strconv.FormatInt(i64, 2)</span>
+<span class="cm">  }</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="kd">func</span> <span class="nx">convertBinaryToInt</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">inputStr</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Replace</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">,</span> <span class="s">&quot;0b&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseInt</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Error occurred during the convertion of %s into Int\n&quot;</span><span class="p">,</span> <span class="nx">inputStr</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertIntToHex</span><span class="p">(</span><span class="nx">inputInt</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">bool</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">i64</span> <span class="o">:=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">inputInt</span><span class="p">)</span>
+    <span class="nx">result</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">FormatInt</span><span class="p">(</span><span class="nx">i64</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">prefix</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;0x&quot;</span> <span class="o">+</span> <span class="nx">result</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">result</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertStringToInt</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">Atoi</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Error occured during the conversion of %s into Int\n&quot;</span><span class="p">,</span> <span class="nx">inputStr</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">result</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertBinaryToString</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">convertHexToString</span><span class="p">(</span><span class="nx">convertIntToHex</span><span class="p">(</span><span class="nx">convertBinaryToInt</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">),</span> <span class="kc">false</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">convertHexToInt</span><span class="p">(</span><span class="nx">inputStr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseInt</span><span class="p">(</span><span class="nx">inputStr</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Error occurred during the convertion of  %s into a Int\n&quot;</span><span class="p">,</span> <span class="nx">inputStr</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:=</span> <span class="s">&quot;nexus&quot;</span>
+    <span class="nx">b</span> <span class="o">:=</span> <span class="s">&quot;6e65787573&quot;</span>
+    <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1050</span>
+    <span class="nx">ii</span> <span class="o">:=</span> <span class="s">&quot;1010&quot;</span>
+    <span class="nx">iii</span> <span class="o">:=</span> <span class="s">&quot;0110111001100101011110000111010101110011&quot;</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;string -&gt; hex: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertStringToHex</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;hex -&gt; string: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertHexToString</span><span class="p">(</span><span class="nx">b</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;string -&gt; binary: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertStringToBinary</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;int -&gt; binary: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertIntToBinary</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="kc">false</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;binary -&gt; int: %d\n&quot;</span><span class="p">,</span> <span class="nx">convertBinaryToInt</span><span class="p">(</span><span class="nx">ii</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;int -&gt; hex: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertIntToHex</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="kc">true</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;binary -&gt; string: %s\n&quot;</span><span class="p">,</span> <span class="nx">convertBinaryToString</span><span class="p">(</span><span class="nx">iii</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;hex -&gt; int: %d\n&quot;</span><span class="p">,</span> <span class="nx">convertHexToInt</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;string -&gt; int: %d\n&quot;</span><span class="p">,</span> <span class="nx">convertStringToInt</span><span class="p">(</span><span class="s">&quot;200&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+  </div><!-- /.entry-content -->
+   <footer class="post-info text-muted">
+    Posted on <abbr class="published" title="2017-02-07T01:20:00+01:00">
+      mar. 07 février 2017
+    </abbr>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/chiheb-nexus.html">Chiheb Nexus</a>
+    </address> in <a href="/category/golang.html">Golang</a> Tagged <a href="/tag/golang.html">golang </a><a href="/tag/conversion.html">conversion </a><a href="/tag/hex.html">hex </a><a href="/tag/ascii.html">ascii </a><a href="/tag/int.html">int </a><a href="/tag/float.html">float </a>  </footer><!-- /.post-info -->
+</section>
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'nexus-coding'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="/feeds/all.atom.xml">RSS</a>
+                        <a href="https://www.facebook.com/chihebnexuss">Facebook</a>
+                        <a href="https://twitter.com/Chiheb_NeXus">Twitter</a>
+                        <a href="mailto:chihebnexus@gmail.com">E-mail</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="">/dev/Chiheb-Nexus</a> Proudly powered by <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
