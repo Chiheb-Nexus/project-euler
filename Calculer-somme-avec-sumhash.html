@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculer les sommes de vos textes à l'aide de sumhash - /dev/Chiheb-Nexus</title>
+        <meta charset="utf-8" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/theme/static/css/style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Full Atom Feed" />
+        <link href="/feeds/golang.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Categories Atom Feed" />
+    </head>
+
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="https://chiheb-nexus.github.io/">Accueil</a></li>
+                    <li><a href="/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="">/dev/Chiheb-Nexus</a></h3>
+				<h2 class="text-muted"></h2>
+             </div>
+<section id="content" class="article content">
+  <header>
+    <h2 class="entry-title">
+      <a href="/Calculer-somme-avec-sumhash.html" rel="bookmark"
+         title="Permalink to Calculer les sommes de vos textes à l'aide de sumhash">Calculer les sommes de vos textes à l'aide de sumhash</a></h2>
+ 
+  </header>
+  
+     
+  <div class="entry-content">
+    <p><strong>Code source:</strong></p>
+<div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm">    sumHash is a tiny application wich can calculate an input text&#39;s sum using those algorithms:</span>
+<span class="cm">        - SHA1</span>
+<span class="cm">        - SHA256</span>
+<span class="cm">        - SHA224</span>
+<span class="cm">        - SHA512</span>
+<span class="cm">        - SHA512_224</span>
+<span class="cm">        - SHA512_256</span>
+<span class="cm">        - SHA384</span>
+<span class="cm">        - MD5</span>
+
+<span class="cm">    Author: Chiheb Nexus</span>
+<span class="cm">    License: GPLv3</span>
+<span class="cm">    Year: 2017</span>
+<span class="cm">    Go version: go1.6.2 linux/amd64</span>
+<span class="cm">*/</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;crypto/md5&quot;</span>
+    <span class="s">&quot;crypto/sha1&quot;</span>
+    <span class="s">&quot;crypto/sha256&quot;</span>
+    <span class="s">&quot;crypto/sha512&quot;</span>
+    <span class="s">&quot;flag&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">hashname</span> <span class="p">=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">`Hash name: </span>
+<span class="s">        - SHA256</span>
+<span class="s">        - SHA224</span>
+<span class="s">        - SHA512</span>
+<span class="s">        - SHA384</span>
+<span class="s">        - SHA512_224</span>
+<span class="s">        - SHA512_256 </span>
+<span class="s">        - MD5`</span><span class="p">)</span>
+    <span class="nx">text</span> <span class="p">=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;Input text to be hashed&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1">// Return SHA256 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA256Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha256</span><span class="p">.</span><span class="nx">Sum256</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return SHA224 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA224HASH</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha256</span><span class="p">.</span><span class="nx">Sum224</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return SHA512 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA512Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">64</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha512</span><span class="p">.</span><span class="nx">Sum512</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return SHA384 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA384Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">48</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha512</span><span class="p">.</span><span class="nx">Sum384</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return SHA512_224 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA512_224Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha512</span><span class="p">.</span><span class="nx">Sum512_224</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return SHA512_256 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnSHA512_256Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha512</span><span class="p">.</span><span class="nx">Sum512_256</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Return MD5 sum</span>
+<span class="kd">func</span> <span class="nx">ReturnMD5Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">md5</span><span class="p">.</span><span class="nx">Sum</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">ReturnSHA1Hash</span><span class="p">(</span><span class="nx">text</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sha1</span><span class="p">.</span><span class="nx">Sum</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">text</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">Parse</span><span class="p">()</span>
+
+    <span class="nx">sample</span> <span class="o">:=</span> <span class="s">&quot;Text: %s\n%s: %x\n&quot;</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha256&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA256&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA256Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha224&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA224&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA224HASH</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha512&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA512&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA512Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha384&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA348&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA384Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha512_224&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA512_224&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA512_224Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha512_256&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA512_256&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA512_256Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;md5&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;MD5&quot;</span><span class="p">,</span> <span class="nx">ReturnMD5Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="o">*</span><span class="nx">hashname</span> <span class="o">==</span> <span class="s">&quot;sha1&quot;</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">sample</span><span class="p">,</span> <span class="o">*</span><span class="nx">text</span><span class="p">,</span> <span class="s">&quot;SHA1&quot;</span><span class="p">,</span> <span class="nx">ReturnSHA1Hash</span><span class="p">(</span><span class="o">*</span><span class="nx">text</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Vous pouvez aussi télécharger le code ou bien le voir sur <a href="https://github.com/Chiheb-Nexus/sumHash">Github</a>.</p>
+  </div><!-- /.entry-content -->
+   <footer class="post-info text-muted">
+    Partagé le <abbr class="published" title="2017-02-10T02:53:00+01:00">
+      ven. 10 février 2017
+    </abbr>
+    <address class="vcard author">
+      par <a class="url fn" href="/author/chiheb-nexus.html">Chiheb Nexus</a>
+    </address> dans <a href="/category/golang.html">Golang</a> avec le Tag <a href="/tag/golang.html">golang </a><a href="/tag/hash.html">hash </a><a href="/tag/sum.html">sum </a><a href="/tag/sha256.html">sha256 </a><a href="/tag/sha512.html">sha512 </a><a href="/tag/md5.html">md5 </a>  </footer><!-- /.post-info -->
+</section>
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'nexus-coding'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="/feeds/all.atom.xml">RSS</a>
+                        <a href="https://www.facebook.com/chihebnexuss">Facebook</a>
+                        <a href="https://twitter.com/Chiheb_NeXus">Twitter</a>
+                        <a href="http://stackoverflow.com/users/3926995/nexus66">Stackoverflow</a>
+                        <a href="mailto:chihebnexus@gmail.com">E-mail</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="">/dev/Chiheb-Nexus</a> Fièrement propulsé par <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
