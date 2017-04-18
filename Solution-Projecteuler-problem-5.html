@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Solution de Projecteuler.net: Problème 5 (Python) - /dev/Chiheb-Nexus</title>
+        <meta charset="utf-8" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/theme/static/css/style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Full Atom Feed" />
+        <link href="/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Categories Atom Feed" />
+    </head>
+
+    <body id="index" class="archive">
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class=""><a href="https://chiheb-nexus.github.io/">Accueil</a></li>
+                    <li><a href="/archives.html">Archives</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="">/dev/Chiheb-Nexus</a></h3>
+				<h2 class="text-muted"></h2>
+             </div>
+<section id="content" class="article content">
+  <header>
+    <h2 class="entry-title">
+      <a href="/Solution-Projecteuler-problem-5.html" rel="bookmark"
+         title="Permalink to Solution de Projecteuler.net: Problème 5 (Python)">Solution de Projecteuler.net: Problème 5 (Python)</a></h2>
+ 
+  </header>
+  
+     
+  <div class="entry-content">
+    <div class="highlight"><pre><span class="c1"># Project Euler: Problem 5</span>
+<span class="c1">#</span>
+<span class="c1"># 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.</span>
+<span class="c1">#</span>
+<span class="c1"># What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?</span>
+<span class="c1">#</span>
+<span class="c1">######################</span>
+<span class="c1"># Solution: 232792560</span>
+<span class="c1"># Best time: NaN</span>
+<span class="c1">######################</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">divided_by</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">limit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
+    <span class="n">condition</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">divided_by</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">j</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span> 
+<span class="c1"># s = start from</span>
+<span class="c1"># divide: number will be divide from 1 to 10</span>
+<span class="n">s</span><span class="p">,</span> <span class="n">divide</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">number</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">divide</span><span class="p">)</span>
+<span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Solution: {0} </span><span class="se">\t</span><span class="s2">Time elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
+</pre></div>
+  </div><!-- /.entry-content -->
+   <footer class="post-info text-muted">
+    Partagé le <abbr class="published" title="2017-04-18T19:55:00+02:00">
+      mar. 18 avril 2017
+    </abbr>
+    <address class="vcard author">
+      par <a class="url fn" href="/author/chiheb-nexus.html">Chiheb Nexus</a>
+    </address> dans <a href="/category/python.html">Python</a> avec le Tag <a href="/tag/python.html">python </a><a href="/tag/projecteuler.html">projecteuler </a>  </footer><!-- /.post-info -->
+</section>
+    <div class="comment">
+        <div id="disqus_thread"></div> <!-- comment app container -->
+    </div>
+	<!-- Comment BEGIN -->
+    <script type="text/javascript">
+        var disqus_shortname = 'nexus-coding'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <!-- Comment END -->
+            <footer id="contentinfo" class="footer">
+                    <nav class="pull-right bottom-nav">
+                        <a href="/feeds/all.atom.xml">RSS</a>
+                        <a href="https://www.facebook.com/chihebnexuss">Facebook</a>
+                        <a href="https://twitter.com/Chiheb_NeXus">Twitter</a>
+                        <a href="http://stackoverflow.com/users/3926995/nexus66">Stackoverflow</a>
+                        <a href="mailto:chihebnexus@gmail.com">E-mail</a>
+                    </nav>
+                    <address id="about" class="vcard body">
+                    &copy; <a href="">/dev/Chiheb-Nexus</a> Fièrement propulsé par <a href="http://getpelican.com/">Pelican</a>
+                    </address><!-- /#about -->
+            </footer><!-- /#contentinfo -->
+        </div><!-- container -->
+    </body>
+</html>
