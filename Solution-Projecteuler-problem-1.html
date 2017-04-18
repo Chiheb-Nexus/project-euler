@@ -30,35 +30,24 @@
   
      
   <div class="entry-content">
-    <div class="highlight"><pre><span class="c1"># Project Euler: Problem 5</span>
+    <div class="highlight"><pre><span class="c1"># ProjectEuler: Problem 1</span>
 <span class="c1">#</span>
-<span class="c1"># 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.</span>
+<span class="c1"># If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. </span>
+<span class="c1"># The sum of these multiples is 23.</span>
+<span class="c1"># Find the sum of all the multiples of 3 or 5 below 1000.</span>
 <span class="c1">#</span>
-<span class="c1"># What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?</span>
-<span class="c1">#</span>
-<span class="c1">######################</span>
-<span class="c1"># Solution: 232792560</span>
-<span class="c1"># Best time: NaN</span>
-<span class="c1">######################</span>
+<span class="c1">####################</span>
+<span class="c1"># Solution: 233168</span>
+<span class="c1"># Best time: 0.00022363662719726562</span>
+<span class="c1">####################</span>
 
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 
-<span class="k">def</span> <span class="nf">divided_by</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">limit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
-    <span class="n">condition</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">start</span>
-    <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">divided_by</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">j</span>
-        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span> 
-<span class="c1"># s = start from</span>
-<span class="c1"># divide: number will be divide from 1 to 10</span>
-<span class="n">s</span><span class="p">,</span> <span class="n">divide</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span>
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-<span class="n">number</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">divide</span><span class="p">)</span>
+<span class="c1"># Sum of the numbers &lt; 1000 which are multiples of 3 or 5</span>
+<span class="n">number</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Solution: {0} </span><span class="se">\t</span><span class="s2">Time elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Solution: {0}</span><span class="se">\t</span><span class="s2"> Time elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
 </pre></div>
   </div><!-- /.entry-content -->
    <footer class="post-info text-muted">
