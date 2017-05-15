@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Solution de Projecteuler.net: Problème 5 (Python) - /dev/Chiheb-Nexus</title>
+        <title>Solution de Projecteuler.net: Problème 5 (Go) - /dev/Chiheb-Nexus</title>
         <meta charset="utf-8" />
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/theme/static/css/style.css" rel="stylesheet" />
@@ -22,41 +22,56 @@
   <header>
     <h2 class="entry-title">
       <a href="/Solution-Projecteuler-problem-5.html" rel="bookmark"
-         title="Permalink to Solution de Projecteuler.net: Problème 5 (Python)">Solution de Projecteuler.net: Problème 5 (Python)</a></h2>
+         title="Permalink to Solution de Projecteuler.net: Problème 5 (Go)">Solution de Projecteuler.net: Problème 5 (Go)</a></h2>
  
   </header>
   
      
   <div class="entry-content">
-    <div class="highlight"><pre><span class="c1"># Project Euler: Problem 5</span>
-<span class="c1">#</span>
-<span class="c1"># 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.</span>
-<span class="c1">#</span>
-<span class="c1"># What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?</span>
-<span class="c1">#</span>
-<span class="c1">######################</span>
-<span class="c1"># Solution: 232792560</span>
-<span class="c1"># Best time: NaN</span>
-<span class="c1">######################</span>
+    <div class="highlight"><pre><span class="err">#</span> <span class="nx">Project</span> <span class="nx">Euler</span><span class="p">:</span> <span class="nx">Problem</span> <span class="mi">5</span>
+<span class="err">#</span>
+<span class="err">#</span> <span class="mi">2520</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">smallest</span> <span class="nx">number</span> <span class="nx">that</span> <span class="nx">can</span> <span class="nx">be</span> <span class="nx">divided</span> <span class="nx">by</span> <span class="nx">each</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">numbers</span> <span class="nx">from</span> <span class="mi">1</span> <span class="nx">to</span> <span class="mi">10</span> <span class="nx">without</span> <span class="nx">any</span> <span class="nx">remainder</span><span class="p">.</span>
+<span class="err">#</span>
+<span class="err">#</span> <span class="nx">What</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">smallest</span> <span class="nx">positive</span> <span class="nx">number</span> <span class="nx">that</span> <span class="nx">is</span> <span class="nx">evenly</span> <span class="nx">divisible</span> <span class="nx">by</span> <span class="nx">all</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">numbers</span> <span class="nx">from</span> <span class="mi">1</span> <span class="nx">to</span> <span class="mi">20</span><span class="err">?</span>
+<span class="err">#</span>
+<span class="err">##########################</span>
+<span class="err">#</span> <span class="nx">Solution</span><span class="p">:</span> <span class="mi">232792560</span>
+<span class="err">#</span> <span class="nx">Best</span> <span class="nx">time</span><span class="p">:</span> <span class="mf">223.410595</span><span class="nx">ms</span>
+<span class="err">##########################</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">package</span> <span class="nx">main</span>
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">divided_by</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">limit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="kd">func</span> <span class="nx">divided_by</span><span class="p">(</span><span class="nx">number</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">limit</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span><span class="p">{</span>
+    <span class="k">for</span> <span class="nx">k</span><span class="o">:=</span><span class="mi">11</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;=</span> <span class="nx">limit</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">number</span> <span class="o">%</span> <span class="nx">k</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
 
-<span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
-    <span class="n">condition</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">start</span>
-    <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">divided_by</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">divide</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">j</span>
-        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span> 
-<span class="c1"># s = start from</span>
-<span class="c1"># divide: number will be divide from 1 to 10</span>
-<span class="n">s</span><span class="p">,</span> <span class="n">divide</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-<span class="n">number</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">divide</span><span class="p">)</span>
-<span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Solution: {0} </span><span class="se">\t</span><span class="s2">Time elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">start</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+    <span class="nx">condition</span> <span class="o">:=</span> <span class="kc">true</span>
+    <span class="nx">j</span><span class="p">,</span> <span class="nx">limit</span> <span class="o">:=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span>
+
+    <span class="k">for</span> <span class="nx">condition</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">divided_by</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span> <span class="nx">limit</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">elapsed</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Since</span><span class="p">(</span><span class="nx">start</span><span class="p">)</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Solution: %v\telapsed: %v\n&quot;</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">elapsed</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+
+        <span class="nx">j</span><span class="o">+=</span><span class="mi">20</span>
+
+    <span class="p">}</span>
+
+<span class="p">}</span>
 </pre></div>
   </div><!-- /.entry-content -->
    <footer class="post-info text-muted">
@@ -65,7 +80,7 @@
     </abbr>
     <address class="vcard author">
       par <a class="url fn" href="/author/chiheb-nexus.html">Chiheb Nexus</a>
-    </address> dans <a href="/category/python.html">Python</a> avec le Tag <a href="/tag/python.html">python </a><a href="/tag/projecteuler.html">projecteuler </a>  </footer><!-- /.post-info -->
+    </address> dans <a href="/category/go.html">Go</a> avec le Tag <a href="/tag/go.html">Go </a><a href="/tag/projecteuler.html">projecteuler </a>  </footer><!-- /.post-info -->
 </section>
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
