@@ -6,8 +6,6 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/theme/static/css/style.css" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Full Atom Feed" />
-        <link href="/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="/dev/Chiheb-Nexus Categories Atom Feed" />
     </head>
 
     <body id="index" class="archive">
@@ -38,11 +36,10 @@
 <span class="c1">#</span>
 <span class="c1">##################</span>
 <span class="c1"># Solution: 6857</span>
-<span class="c1"># Best time: NaN</span>
+<span class="c1"># Best time:  0.3705568313598633</span>
 <span class="c1">##################</span>
 
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
 
 <span class="k">def</span> <span class="nf">get_primes</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -57,23 +54,21 @@
             <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
                 <span class="n">a</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
 
-<span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="bp">True</span>
+<span class="k">def</span> <span class="nf">get_factors</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">factor</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">number</span><span class="o">//</span><span class="n">k</span><span class="p">)</span> <span class="k">if</span> <span class="n">number</span><span class="o">%</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">get_primes2</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">limit</span> <span class="o">+</span><span class="mi">1</span> <span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">k</span>
+<span class="k">def</span> <span class="nf">get_max_prime_factor</span><span class="p">(</span><span class="n">factors</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+    <span class="n">factors_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">num_factors</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">number</span><span class="p">)</span>
+    <span class="n">list_primes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_primes</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">factors_max</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">num_factors</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">list_primes</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">factors_max</span><span class="p">)</span>
 
-<span class="n">limit</span> <span class="o">=</span> <span class="mi">13195</span>
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-<span class="n">primes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_primes2</span><span class="p">(</span><span class="n">limit</span><span class="p">))</span>
-<span class="n">max_primes</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">limit</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">primes</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">%</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">number</span> <span class="o">=</span> <span class="mi">600851475143</span>
+<span class="n">num_factors</span> <span class="o">=</span> <span class="n">get_factors</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+
+<span class="n">max_prime_factor</span> <span class="o">=</span> <span class="n">get_max_prime_factor</span><span class="p">(</span><span class="n">num_factors</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
 <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Solution: {0} </span><span class="se">\t</span><span class="s2">Time elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_primes</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Result: {0}</span><span class="se">\t</span><span class="s2">elapsed: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_prime_factor</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">))</span>
 </pre></div>
   </div><!-- /.entry-content -->
    <footer class="post-info text-muted">
@@ -84,25 +79,9 @@
       par <a class="url fn" href="/author/chiheb-nexus.html">Chiheb Nexus</a>
     </address> dans <a href="/category/python.html">Python</a> avec le Tag <a href="/tag/python.html">python </a><a href="/tag/projecteuler.html">projecteuler </a>  </footer><!-- /.post-info -->
 </section>
-    <div class="comment">
-        <div id="disqus_thread"></div> <!-- comment app container -->
-    </div>
-	<!-- Comment BEGIN -->
-    <script type="text/javascript">
-        var disqus_shortname = 'nexus-coding'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-     <!-- Comment END -->
             <footer id="contentinfo" class="footer">
                     <nav class="pull-right bottom-nav">
-                        <a href="/feeds/all.atom.xml">RSS</a>
+                        <a href="/None">RSS</a>
                         <a href="https://www.facebook.com/chihebnexuss">Facebook</a>
                         <a href="https://twitter.com/Chiheb_NeXus">Twitter</a>
                         <a href="http://stackoverflow.com/users/3926995/nexus66">Stackoverflow</a>
